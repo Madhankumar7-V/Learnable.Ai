@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learnable.ai — Premium Enterprise Learning Platform</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#8b5cf6"/>
+  <meta name="description" content="Premium gamified learning platform with advanced analytics and enterprise-grade features">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+  <main class="container">
+    <!-- Premium Header Section -->
+    <header class="header">
+      <div class="brand-logo">
+        <div class="logo-icon">🧠</div>
+        <div class="brand-text">
+          <h1>Learnable.ai</h1>
+          <div class="brand-tagline">CBSE Learning Platform</div>
+        </div>
+      </div>
+      <p class="subtitle">Gamified Learning Platform for CBSE Students</p>
+      <div class="row" style="justify-content:center; margin-top: 16px;">
+        <a href="student-dashboard.html" class="btn btn-primary" style="text-decoration:none; text-align:center;">My Dashboard</a>
+        <a href="videos.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Video Library</a>
+        <a href="dashboard.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Teacher Login</a>
+      </div>
+    </header>
+
+    <!-- Premium Student Setup Card -->
+    <div class="card premium" id="setupCard">
+      <div class="card-header">
+        <h2 class="card-title">🎓 Student Portal</h2>
+        <p class="card-description">Access your personalized learning dashboard</p>
+      </div>
+      
+      <div class="input-group">
+        <label for="studentId">Student Identification</label>
+        <input id="studentId" placeholder="Enter your unique student ID (e.g., student01)" />
+        <div class="input-hint">Your progress will be saved and synced across devices</div>
+      </div>
+
+      <div class="input-group">
+        <label for="subjectSelect">Subject</label>
+        <select id="subjectSelect">
+          <option value="Math">Math</option>
+          <option value="Science">Science</option>
+          <option value="English">English</option>
+          <option value="History">History</option>
+          <option value="Computer Science">Computer Science</option>
+        </select>
+        <div class="input-hint">Choose the subject to generate a tailored quiz</div>
+      </div>
+
+      <div class="input-group">
+        <label for="gradeSelect">Grade (CBSE)</label>
+        <select id="gradeSelect">
+          <option value="6">Class 6</option>
+          <option value="7">Class 7</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
+          <option value="11">Class 11</option>
+          <option value="12">Class 12</option>
+        </select>
+        <div class="input-hint">We’ll tailor questions to your CBSE class</div>
+      </div>
+
+
+      <div class="row">
+        <button id="startBtn" class="btn btn-premium">🚀 Launch Learning Experience</button>
+        <button id="syncBtn" class="btn btn-secondary">☁️ Sync Progress</button>
+      </div>
+      
+      <div class="feature-highlights">
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <span class="feature-text">Advanced Analytics</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🏆</span>
+          <span class="feature-text">Achievement System</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <span class="feature-text">Real-time Progress</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Card -->
+    <div class="card" id="gameCard" hidden>
+      <!-- Game Stats -->
+      <div class="game-stats">
+        <div class="stat-item">
+          <span class="stat-value" id="scoreView">0</span>
+          <span class="stat-label">Score</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="levelView">1</span>
+          <span class="stat-label">Level</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="streakView">0</span>
+          <span class="stat-label">Streak</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="xpView">0</span>
+          <span class="stat-label">XP</span>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div class="row small">
+        <span id="progressView">Question 0 of 0</span>
+        <span id="accuracyView">Accuracy: 0%</span>
+      </div>
+
+      <!-- Question Area -->
+      <div class="question-area">
+        <div class="question-text" id="questionArea">Loading question...</div>
+      </div>
+
+      <!-- Options Area -->
+      <div id="optionsArea"></div>
+
+      <!-- Feedback -->
+      <div id="feedback"></div>
+      <div id="explanation" class="muted" style="margin-top:10px;"></div>
+
+      <!-- Action Buttons -->
+      <div class="row">
+        <button id="hintBtn" class="btn btn-secondary">💡 Hint</button>
+        <button id="nextBtn" class="btn btn-success" hidden>➡️ Next Question</button>
+        <button id="finishBtn" class="btn btn-warning" hidden>🏁 Finish Quiz</button>
+      </div>
+    </div>
+
+    <!-- Result Card -->
+    <div class="card result-card" id="resultCard" hidden>
+      <h2 class="result-title">🎉 Quiz Complete!</h2>
+      <div class="result-text" id="resultText">Calculating your results...</div>
+      <div class="badge" id="badgeText">🏆 Achievement Unlocked!</div>
+      
+      <!-- Performance Summary -->
+      <div class="game-stats" style="margin-top: 30px;">
+        <div class="stat-item">
+          <span class="stat-value" id="finalScore">0</span>
+          <span class="stat-label">Final Score</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="finalAccuracy">0%</span>
+          <span class="stat-label">Accuracy</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="timeTaken">0s</span>
+          <span class="stat-label">Time</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="xpEarned">0</span>
+          <span class="stat-label">XP Earned</span>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 30px;">
+        <button id="retryBtn" class="btn btn-primary">🔄 Try Again</button>
+        <button id="newQuizBtn" class="btn btn-secondary">🎯 New Quiz</button>
+        <button id="downloadCertBtn" class="btn btn-success">📜 Download Certificate</button>
+      </div>
+    </div>
+
+    <!-- Achievement Notifications -->
+    <div id="achievementNotification" class="card" style="position: fixed; top: 20px; right: 20px; z-index: 1000; display: none; max-width: 300px;">
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">🏆</div>
+        <div style="font-weight: 600; margin-bottom: 5px;">Achievement Unlocked!</div>
+        <div id="achievementText" style="font-size: 0.9rem; color: var(--text-secondary);"></div>
+      </div>
+    </div>
+
+    <footer class="muted">
+      <p>🌟 Powered by Learnable.ai — Where learning meets gaming!</p>
+      <p>Your progress is automatically saved and shared with teachers across all devices.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+  <!-- Firebase SDK for shared data storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase-config.learnable.js"></script>
+</body>
+</html>

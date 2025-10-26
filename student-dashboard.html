@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learnable.ai — Student Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <main class="container">
+    <!-- Student Header -->
+    <header class="header">
+      <div class="brand-logo">
+        <div class="logo-icon">🎓</div>
+        <div class="brand-text">
+          <h1>Student Dashboard</h1>
+          <div class="brand-tagline">Your Learning Journey</div>
+        </div>
+      </div>
+      <p class="subtitle">Track your progress and access learning materials</p>
+      <div class="row" style="justify-content:center; margin-top: 16px;">
+        <a href="index.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Take Quiz</a>
+        <a href="videos.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Video Library</a>
+        <button id="downloadOffline" class="btn btn-success">📱 Download for Offline</button>
+      </div>
+    </header>
+
+    <!-- Student Progress Overview -->
+    <div class="card premium">
+      <div class="card-header">
+        <h2 class="card-title">📊 Your Progress</h2>
+        <p class="card-description">Track your learning achievements and performance</p>
+      </div>
+      <div class="game-stats">
+        <div class="stat-item premium">
+          <div class="stat-icon">🏆</div>
+          <span class="stat-value" id="studentTotalScore">0</span>
+          <span class="stat-label">Total Score</span>
+          <div class="stat-trend">Keep learning!</div>
+        </div>
+        <div class="stat-item premium">
+          <div class="stat-icon">📚</div>
+          <span class="stat-value" id="studentQuizCount">0</span>
+          <span class="stat-label">Quizzes Taken</span>
+          <div class="stat-trend">Great progress!</div>
+        </div>
+        <div class="stat-item premium">
+          <div class="stat-icon">🎯</div>
+          <span class="stat-value" id="studentAvgAccuracy">0%</span>
+          <span class="stat-label">Average Accuracy</span>
+          <div class="stat-trend">Excellent work!</div>
+        </div>
+        <div class="stat-item premium">
+          <div class="stat-icon">⚡</div>
+          <span class="stat-value" id="studentLevel">1</span>
+          <span class="stat-label">Current Level</span>
+          <div class="stat-trend">Level up!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subject Performance -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">📈 Subject Performance</h2>
+        <p class="card-description">Your performance across different subjects</p>
+      </div>
+      <div class="row" style="margin-bottom: 20px;">
+        <div class="card" style="flex: 1; margin-right: 10px;">
+          <h3 style="margin-top: 0; color: var(--text-primary);">📊 Performance by Subject</h3>
+          <canvas id="subjectChart" width="400" height="200"></canvas>
+        </div>
+        <div class="card" style="flex: 1; margin-left: 10px;">
+          <h3 style="margin-top: 0; color: var(--text-primary);">🎯 Accuracy Trends</h3>
+          <canvas id="accuracyChart" width="400" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+      <h3 style="margin-top: 0; color: var(--text-primary);">📋 Recent Activity</h3>
+      <div style="overflow-x: auto;">
+        <table id="studentEventsTable" class="data-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Unit</th>
+              <th>Grade</th>
+              <th>Score</th>
+              <th>Accuracy</th>
+              <th>Time</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div class="card">
+      <h3 style="margin-top: 0; color: var(--text-primary);">🏆 Achievements</h3>
+      <div id="achievementsList" class="student-cards">
+        <!-- Achievements will be dynamically generated here -->
+      </div>
+    </div>
+
+    <!-- Offline Status -->
+    <div class="card">
+      <h3 style="margin-top: 0; color: var(--text-primary);">📱 Offline Access</h3>
+      <div class="row">
+        <div class="input-group" style="flex:1;">
+          <label>Status</label>
+          <div id="offlineStatus" class="btn btn-success">🟢 Online</div>
+        </div>
+        <div class="input-group" style="flex:1;">
+          <label>Cached Videos</label>
+          <div id="cachedVideos" class="btn btn-secondary">0 Videos</div>
+        </div>
+        <div class="input-group" style="flex:1;">
+          <label>Storage Used</label>
+          <div id="storageUsed" class="btn btn-secondary">0 MB</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 16px;">
+        <button id="clearCache" class="btn btn-warning">🗑️ Clear Cache</button>
+        <button id="updateOffline" class="btn btn-primary">🔄 Update Offline Content</button>
+      </div>
+    </div>
+
+    <footer class="muted">
+      <p>🌟 Learnable.ai Student Dashboard — Your personalized learning companion</p>
+    </footer>
+  </main>
+
+  <script src="student-dashboard.js"></script>
+</body>
+</html>

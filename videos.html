@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learnable.ai — Video Library</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <div class="brand-logo">
+        <div class="logo-icon">🎥</div>
+        <div class="brand-text">
+          <h1>CBSE Video Library</h1>
+          <div class="brand-tagline">Subject • Grade • Unit • Topic</div>
+        </div>
+      </div>
+      <div class="row" style="justify-content:center; margin-top: 16px;">
+        <a href="index.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Take Quiz</a>
+        <a href="student-dashboard.html" class="btn btn-primary" style="text-decoration:none; text-align:center;">My Dashboard</a>
+        <a href="dashboard.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Teacher Login</a>
+      </div>
+    </header>
+
+    <div class="card premium">
+      <div class="card-header">
+        <h2 class="card-title">🎯 Find Videos</h2>
+        <p class="card-description">Filter by subject, grade, unit, or topic</p>
+      </div>
+      <div class="row">
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="vSubject">Subject</label>
+          <select id="vSubject">
+            <option value="">All Subjects</option>
+            <option value="Math">Math</option>
+            <option value="Science">Science</option>
+            <option value="English">English</option>
+            <option value="History">History</option>
+            <option value="Computer Science">Computer Science</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:1; min-width: 160px;">
+          <label for="vGrade">Grade</label>
+          <select id="vGrade">
+            <option value="">All Grades</option>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+            <option value="11">Class 11</option>
+            <option value="12">Class 12</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:1; min-width: 220px;">
+          <label for="vUnit">Unit</label>
+          <select id="vUnit">
+            <option value="">All Units</option>
+            <option value="1">Unit 1</option>
+            <option value="2">Unit 2</option>
+            <option value="3">Unit 3</option>
+            <option value="4">Unit 4</option>
+            <option value="5">Unit 5</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:2; min-width: 260px;">
+          <label for="vTopic">Topic</label>
+          <select id="vTopic">
+            <option value="">All Topics</option>
+          </select>
+        </div>
+        <div class="row" style="align-items:flex-end;">
+          <button id="vApply" class="btn btn-primary">Apply</button>
+          <button id="vClear" class="btn btn-secondary">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">📚 Videos</h2>
+        <p class="card-description">Click to play. YouTube links are supported.</p>
+      </div>
+      <div id="videoGrid" class="student-cards"></div>
+    </div>
+
+    <footer class="muted">
+      <p>Learnable.ai • CBSE-aligned learning videos</p>
+    </footer>
+  </main>
+
+  <!-- Firebase SDK for shared data storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase-config.learnable.js"></script>
+  <script src="videos.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+{
+  "short_name": "SIH-MVP",
+  "name": "SIH Hackathon MVP - Student App",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b74de",
+  "description": "Offline-friendly gamified STEM learning MVP"
+}

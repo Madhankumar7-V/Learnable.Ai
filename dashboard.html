@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learnable.ai — Teacher Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <main class="container">
+    <div id="authGate" class="card" style="max-width: 500px; margin: 0 auto;" hidden>
+      <div class="card-header">
+        <h2 class="card-title">🔐 Teacher Login</h2>
+        <p class="card-description">Enter the access code to view the dashboard</p>
+      </div>
+      <div class="input-group">
+        <label for="teacherCode">Access Code</label>
+        <input id="teacherCode" type="password" placeholder="Enter passcode" />
+      </div>
+      <div class="row">
+        <button id="loginBtn" class="btn btn-primary">Login</button>
+        <a href="index.html" class="btn btn-secondary" style="text-decoration: none; text-align: center;">Back to Student</a>
+      </div>
+    </div>
+    <!-- Premium Header Section -->
+    <header class="header" id="dashHeader" hidden>
+      <div class="brand-logo">
+        <div class="logo-icon">📊</div>
+        <div class="brand-text">
+          <h1>Teacher Dashboard</h1>
+          <div class="brand-tagline">Learning Analytics & Management</div>
+        </div>
+      </div>
+      <p class="subtitle">Monitor student progress and manage educational content</p>
+      <div class="row" style="justify-content:center; margin-top: 24px;">
+        <a href="index.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Student Portal</a>
+        <a href="student-dashboard.html" class="btn btn-secondary" style="text-decoration:none; text-align:center;">Student Dashboard</a>
+      </div>
+    </header>
+
+    <!-- Simple Control Panel -->
+    <div class="card premium" id="controlPanel" hidden>
+      <div class="dashboard-controls" style="justify-content: center; gap: 16px;">
+        <button id="syncLocalData" class="btn btn-primary" disabled>⏳ Loading Firebase...</button>
+        <button id="logoutBtn" class="btn btn-danger">Logout</button>
+        <a href="videos.html" class="btn btn-secondary" style="text-decoration:none;">🎥 Video Library</a>
+      </div>
+    </div>
+
+    <!-- Premium Statistics Overview -->
+    <div class="card" id="statsOverview" hidden>
+      <div class="card-header">
+        <h2 class="card-title">📊 Performance Overview</h2>
+        <p class="card-description">Key metrics and learning analytics at a glance</p>
+      </div>
+      <div class="game-stats">
+        <div class="stat-item premium">
+          <div class="stat-icon">👥</div>
+          <span class="stat-value" id="totalStudents">0</span>
+          <span class="stat-label">Active Students</span>
+          <div class="stat-trend">+12% this week</div>
+        </div>
+        <div class="stat-item premium">
+          <div class="stat-icon">📚</div>
+          <span class="stat-value" id="totalQuizzes">0</span>
+          <span class="stat-label">Quizzes Completed</span>
+          <div class="stat-trend">+8% this week</div>
+        </div>
+        <div class="stat-item premium">
+          <div class="stat-icon">🎯</div>
+          <span class="stat-value" id="avgScore">0</span>
+          <span class="stat-label">Average Score</span>
+          <div class="stat-trend">+5% this week</div>
+        </div>
+        <div class="stat-item premium">
+          <div class="stat-icon">⚡</div>
+          <span class="stat-value" id="avgAccuracy">0%</span>
+          <span class="stat-label">Success Rate</span>
+          <div class="stat-trend">+3% this week</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="card" id="filterBar" hidden>
+      <div class="row">
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="filterSubject">Filter by Subject</label>
+          <select id="filterSubject">
+            <option value="">All Subjects</option>
+            <option value="Math">Math</option>
+            <option value="Science">Science</option>
+            <option value="English">English</option>
+            <option value="History">History</option>
+            <option value="Computer Science">Computer Science</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="filterUnit">Filter by Unit</label>
+          <input id="filterUnit" placeholder="e.g., Trigonometry" />
+        </div>
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="filterGrade">Filter by Grade</label>
+          <select id="filterGrade">
+            <option value="">All Grades</option>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+            <option value="11">Class 11</option>
+            <option value="12">Class 12</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="filterDateFrom">From</label>
+          <input id="filterDateFrom" type="date" />
+        </div>
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="filterDateTo">To</label>
+          <input id="filterDateTo" type="date" />
+        </div>
+        <div class="row" style="align-items:flex-end;">
+          <button id="applyFilters" class="btn btn-primary">Apply</button>
+          <button id="clearFilters" class="btn btn-secondary">Clear</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Leaderboard -->
+    <div class="card" id="leaderboardCard" hidden>
+      <h3 style="margin-top: 0; color: var(--text-primary);">🏆 Top Performers</h3>
+      <div id="leaderboard" class="leaderboard">
+        <div class="leaderboard-item">
+          <div class="rank">1st</div>
+          <div class="student-info">
+            <div class="student-name">Loading...</div>
+            <div class="student-stats">Score: 0 | Level: 1</div>
+          </div>
+          <div class="achievement-badge">🥇</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed Results Table -->
+    <div class="card" id="resultsTableCard" hidden>
+      <h3 style="margin-top: 0; color: var(--text-primary);">📋 Detailed Results</h3>
+      <div style="overflow-x: auto;">
+        <table id="eventsTable" class="data-table">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Subject</th>
+              <th>Unit</th>
+              <th>Grade</th>
+              <th>Score</th>
+              <th>Accuracy</th>
+              <th>Time</th>
+              <th>Streak</th>
+              <th>XP</th>
+              <th>Level</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Student Progress Cards -->
+    <div class="card" id="studentProgressCard" hidden>
+      <h3 style="margin-top: 0; color: var(--text-primary);">👥 Student Progress</h3>
+      <div id="studentCards" class="student-cards">
+        <!-- Student cards will be dynamically generated here -->
+      </div>
+    </div>
+
+    <!-- Student Roster -->
+    <div class="card" id="studentRosterCard" hidden>
+      <h3 style="margin-top: 0; color: var(--text-primary);">📇 Student Roster</h3>
+      <div id="studentRoster" class="leaderboard"></div>
+    </div>
+
+    <!-- Teacher Video Upload -->
+    <div class="card" id="videoUploadCard" hidden>
+      <h3 style="margin-top: 0; color: var(--text-primary);">🎥 Upload Lecture Video</h3>
+      <div class="row">
+        <div class="input-group" style="flex:1; min-width: 200px;">
+          <label for="vuSubject">Subject</label>
+          <select id="vuSubject">
+            <option value="Math">Math</option>
+            <option value="Science">Science</option>
+            <option value="English">English</option>
+            <option value="History">History</option>
+            <option value="Computer Science">Computer Science</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:1; min-width: 160px;">
+          <label for="vuGrade">Grade</label>
+          <select id="vuGrade">
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+            <option value="11">Class 11</option>
+            <option value="12">Class 12</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-group" style="flex:1; min-width: 220px;">
+          <label for="vuUnit">Unit</label>
+          <select id="vuUnit">
+            <option value="1">Unit 1</option>
+            <option value="2">Unit 2</option>
+            <option value="3">Unit 3</option>
+            <option value="4">Unit 4</option>
+            <option value="5">Unit 5</option>
+          </select>
+        </div>
+        <div class="input-group" style="flex:2; min-width: 260px;">
+          <label for="vuTopic">Topic</label>
+          <select id="vuTopic">
+            <option value="">Select Topic</option>
+            <option value="__custom">➕ Custom topic…</option>
+          </select>
+          <div id="vuTopicCustomWrap" style="margin-top: 8px; display:none;">
+            <input id="vuTopicCustom" placeholder="Enter custom topic" />
+          </div>
+        </div>
+        <div class="input-group" style="flex:2; min-width: 260px;">
+          <label for="vuURL">Video URL</label>
+          <input id="vuURL" placeholder="https://... (YouTube or CDN)" />
+        </div>
+        <div class="row" style="align-items:flex-end;">
+          <button id="vuSave" class="btn btn-primary">Save Video</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="muted">
+      <p>🌟 Learnable.ai Dashboard — Real-time analytics for educational success</p>
+      <p>Data is automatically synced across all devices for shared access by all teachers.</p>
+    </footer>
+  </main>
+
+  <script src="dashboard.js"></script>
+  <!-- Firebase SDK for shared data storage -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase-config.learnable.js"></script>
+</body>
+</html>
